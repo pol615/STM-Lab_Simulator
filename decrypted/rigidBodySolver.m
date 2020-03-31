@@ -68,7 +68,7 @@ function [F,M]=giveLoads(y,theta,Load,Theta)
     M_=F_;M=0;
     if(isfield(Load,'Children'))
         for i=1:length(Load)
-            F_(i)=giveF(y,Load(i).Children);
+            F_(i)=giveF(y,Load(i).Children,Theta(i).eps(theta(1)));
             M__=cross([[cos(Theta(i).fnc(theta(1))),sin(Theta(i).fnc(theta(1)))]*F_(i),0],[Theta(i).r0',0]);
             M_(i)=M__(3);
             
@@ -77,13 +77,13 @@ function [F,M]=giveLoads(y,theta,Load,Theta)
     end
 end
 
-function F=giveF(y,Load)
+function F=giveF(y,Load,eps)
     F=0;
     if(isfield(Load,'Children'))
         for i=1:length(Load)
-            F=F+giveF(y,Load(i).Children);
+            F=F+giveF(y,Load(i).Children,eps);
         end
     else
-        F=F+Load(y);
+        F=F+Load(eps);
     end
 end

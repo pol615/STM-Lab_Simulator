@@ -16,8 +16,10 @@ global labNum;
         case 2
             %run simulate2
             simulateRigidBody();
-            display('End Calculation.')
-            
+            display('End Calculation.');
+        case 3
+            simulateRigidBody();
+            display('End Calculation.');
     end
 end
 
@@ -174,7 +176,7 @@ global Fixation OriginalShape shp;
     for i=1:length(t)-1
         dy=y(i+1,4)-y(i,4);
         if(i==1); dy=dy+y(1,4);end;
-        if (abs(dy)<1e-3 && i/(length(t)-1)>0.5); break; end;
+        if (abs(dy)<1e-3 && i/(length(t)-1)>0.3); break; end;
         rotateShape(iFix,dy,x0,y0);
         drawnow update
         pause(0.05)
@@ -224,9 +226,9 @@ global shp;
         nan;
     elseif(contains(shp(iFix).name,'Weight'))
         if (isempty(shp(iFix).UserData.weight));error('CUSTOM ERROR:   Weight: %s has no weight assigned',shp(iFix).name);end;
-        Load=@(x)-shp(iFix).UserData.weight;
-    elseif(contains(shp(iFix).name,'Spring'))
-        Load=@(x)-shp(iFix).UserData.weight;
+        Load=@(eps)-shp(iFix).UserData.weight;
+    elseif(contains(shp(iFix).name,'Dynamometer'))
+        Load=@(eps)1*eps;
     end
 end
 
@@ -240,6 +242,8 @@ global shp linkShp;
         theta(ilink).r0=[x-x0;y-y0];
         [x,y]=givePoint(ILINK.start(1),ILINK.start(2));
         theta(ilink).r1=[x-x0;y-y0];
+        theta(ilink).eps=@(beta)ExternalEps(beta,theta(ilink).r0,theta(ilink).r1,...
+            shp(ILINK.start(1)).name);
         theta(ilink).fnc=@(beta)ExternalForce(beta,theta(ilink).r0,theta(ilink).r1,...
             shp(ILINK.start(1)).name);
     end
@@ -249,10 +253,28 @@ function theta=ExternalForce(beta,r0,r1,str)
     if (contains(str,'Pulley'))
         dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
         theta=atan2(dx(2),dx(1));
+    elseif(contains(str,'Dynamometer'))
+        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
+        theta=atan2(dx(2),dx(1));
     else
         theta=beta-pi/2;
     end
 end
+
+function eps=ExternalEps(beta,r0,r1,str)
+    if (contains(str,'Pulley'))
+        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
+        dx0=[r1 - r0];
+        eps=norm(dx)/norm(dx0);
+    elseif(contains(str,'Dynamometer'))
+        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
+        dx0=[r1 - r0];
+        eps=norm(dx)/norm(dx0);
+    else
+        eps=0;
+    end
+end
+
 
 function UnknownLink=findLinksInCon(ishp_,iilinkRef)
 global shp linkShp;

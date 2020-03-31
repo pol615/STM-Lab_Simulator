@@ -66,8 +66,17 @@ line=@(x0,x1,y0,y1)([x0,x1;y0,y1]);
 quadrilater=@(w,h,x,y)([x-w,x-w,x+w,x+w;y-h,y+h,y+h,y-h]);
 
 
+global labNum;
+    switch (labNum)
+        case 1
+            run lab1;
+        case 2
+            run lab2;
+        case 3
+            run lab3;
+                
+    end
 
-run lab2;
 
 
 
@@ -131,7 +140,11 @@ global shp LinkContextMenuWeight;
                 
                 %ishp.con.ContextMenu=LinkContextMenuWeight;
                 uiLink=@(c)uimenu(c,'Label','Linking');
-                uiLinkAddWeight=@(c)uimenu(c,'Label','Start','Callback',@linkWeight);
+                if (contains(ishp.name,'Dynamometer'))
+                    uiLinkAddWeight=@(c)uimenu(c,'Label','Start','Callback',@linkDynamometer);
+                else
+                    uiLinkAddWeight=@(c)uimenu(c,'Label','Start','Callback',@linkWeight);
+                end
                 
                 LinkContextMenuWeight2=uicontextmenu;
                 LinkDraw2=uiLink(LinkContextMenuWeight2);
@@ -332,6 +345,51 @@ clc;
     end
     
 end
+
+function linkDynamometer(object,eventdata)
+global shp state stateLbl linkShp UnLinkContextMenu;
+clc;
+    switch(stateLbl.text)
+        case 'Start'
+            conHole=object.Parent.Parent.UserData.Con;
+            linkShp.itm(linkShp.cnt+1).link.start=conHole;
+            boolFound=true;
+            if (boolFound) stateLbl.text='End'; display('Selected point is correct'); else; display('Not a correct point');end;
+        case 'End'
+            conHole=object.Parent.Parent.UserData.Con;
+            boolFound=false;
+            linkShp.itm(linkShp.cnt+1).link.end=conHole;
+            boolFound=true;
+        if (boolFound) 
+            display('Selected point is correct');
+            if (isnan(linkShp.itm(linkShp.cnt+1).link.start(2)))
+                 [xstart, ystart] = centroid(shp(linkShp.itm(linkShp.cnt+1).link.start(1)).con.Shape);
+            else
+                 [xstart, ystart] = centroid(shp(linkShp.itm(linkShp.cnt+1).link.start(1)).hole(linkShp.itm(linkShp.cnt+1).link.start(2)).shape);
+            end
+            if (isnan(linkShp.itm(linkShp.cnt+1).link.end(2)))
+                [xend, yend]     = centroid(shp(linkShp.itm(linkShp.cnt+1).link.end(1)).con.Shape);
+            else
+                [xend, yend]     = centroid(shp(linkShp.itm(linkShp.cnt+1).link.end(1)).hole(linkShp.itm(linkShp.cnt+1).link.end(2)).shape);
+            end
+            hold on
+            linkShp.itm(linkShp.cnt+1).get=plot(polyshape([xstart,ystart;xend,yend;xstart-1e-4,ystart-1e-4]));
+            hold off
+            TmpCM=uicontextmenu;
+            UnLinkContextMenu(TmpCM);
+            linkShp.itm(linkShp.cnt+1).get.ContextMenu=TmpCM;
+            linkShp.itm(linkShp.cnt+1).get.ContextMenu.UserData=linkShp.itm(linkShp.cnt+1).get;
+            linkShp.cnt=linkShp.cnt+1;
+            stateLbl.text='Start'; 
+        else; display('Not a correct point');
+        end
+    end
+    for ishp=shp;
+        if (~isempty(ishp.con.ContextMenu)) ishp.con.ContextMenu.Children.Children.Text=stateLbl.text; end
+    end
+    
+end
+
 
 function unLink(object,eventdata)
 global linkShp;

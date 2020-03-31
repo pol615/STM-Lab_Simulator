@@ -1,6 +1,7 @@
 clear all;clc;close all force;w = warning ('off','all');
 
-global labNum;addpath('lab');
+addpath('lab');
+global labNum;
 display('Laboratory:');
 display('   1 - Equilibrium of Forces ')
 display('   2 - Equilibrium of Moments ')
@@ -8,7 +9,7 @@ display('   3 - Lever and Beam Reactions ')
 display('   4 - Centroids and Centre of Gravity ')
 display('   5 - Dry Friction ')
 if (true)
-    labNum=2;
+    labNum=3;
 else
     labNum=input('Select from 1 to 5 which laboratory you want to load: ');
 end
