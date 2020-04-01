@@ -8,7 +8,7 @@ display('   2 - Equilibrium of Moments ')
 display('   3 - Lever and Beam Reactions ')
 display('   4 - Centroids and Centre of Gravity ')
 display('   5 - Dry Friction ')
-if (true)
+if (false)
     labNum=3;
 else
     labNum=input('Select from 1 to 5 which laboratory you want to load: ');
