@@ -1,6 +1,9 @@
 %% UI
 rightClickMenu = uicontextmenu;
 m1 = uimenu(rightClickMenu,'Label','Reset View','Callback',@ZoomReset);
+m2 = uimenu(rightClickMenu,'Label','Zoom Frame','Callback',@ZoomFrame);
+m3 = uimenu(rightClickMenu,'Label','Distance','Callback',@DistanceMeasure);
+%m2 = uimenu(rightClickMenu,'Label','Angle','Callback',@AngleMeasure);
 
 run simulate.m
 
@@ -307,6 +310,32 @@ function SelectionFix(src,event)
         %str{val};
         %disp(['Selection: ' str{val}]);
 
+end
+
+function [x,y]=GiveMousePosition()
+            C = get (gca, 'CurrentPoint');
+            x=C(1,1);
+            y=C(1,2);
+end
+
+function DistanceMeasure(object,eventdata)
+    clc;
+    display('Select first point...')
+    waitforbuttonpress;
+    [x0,y0]=GiveMousePosition();
+    
+    display('Select second point point...')
+    waitforbuttonpress;
+    [x1,y1]=GiveMousePosition();
+    
+    display(sprintf('\nX distance is : \t%f m',x1-x0));
+    display(sprintf('Y distance is : \t%f m',y1-y0));
+    display(sprintf('Distance is : \t%f m',norm([x1-x0,y1-y0])));
+    display(sprintf('Angle is : \t%f º',atan2(y1-y0,x1-x0)*180/pi));
+end
+
+function ZoomFrame(object,eventdata)
+    axis tight equal;
 end
 
 

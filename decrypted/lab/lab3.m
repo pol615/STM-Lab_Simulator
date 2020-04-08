@@ -122,7 +122,7 @@ Drawing(1).component(accComp).data=[-16,-16,7,9];
 
 
 %% Pulley
-
+if (false)
 Drawing(2).name='Pulley';
 
 Drawing(2).color.off=color.lightBlue;
@@ -152,40 +152,40 @@ accComp=accComp+1;
 Drawing(2).component(accComp).name=['PulleyHole_',1];
 Drawing(2).component(accComp).fnc=Drawing(1).function(1).fnc;
 Drawing(2).component(accComp).data=[-16,-16,1];
-
+end
 
 %% Weight
 
 for i=1:2
 
-Drawing(2+i).name=sprintf('Weight_%i',i);
+Drawing(1+i).name=sprintf('Weight_%i',i);
 
-Drawing(2+i).color.off=color.lightyellow;
-Drawing(2+i).color.on=color.lightRed;
-Drawing(2+i).color.fix=color.black;
-Drawing(2+i).color.joint=color.lightGreen;
+Drawing(1+i).color.off=color.lightyellow;
+Drawing(1+i).color.on=color.lightRed;
+Drawing(1+i).color.fix=color.black;
+Drawing(1+i).color.joint=color.lightGreen;
 
-Drawing(2+i).contextMenu = uicontextmenu;
+Drawing(1+i).contextMenu = uicontextmenu;
 %FixDraw3=uiFix(Drawing(3).contextMenu);
 %uiFixAdd(FixDraw3);
 %uiUnFixAdd(FixDraw3)
-ConDraw3(i).ui=uiCon(Drawing(2+i).contextMenu);
+ConDraw3(i).ui=uiCon(Drawing(1+i).contextMenu);
 uiConWeightAdd(ConDraw3(i).ui);
 uiUnConWeightAdd(ConDraw3(i).ui);
-uiSetWeight(Drawing(2+i).contextMenu);
+uiSetWeight(Drawing(1+i).contextMenu);
 
 accComp=0;
 accComp=accComp+1;
 
-Drawing(2+i).component(accComp).name=['WeightEdge_',1];
-Drawing(2+i).component(accComp).fnc=@(data)quadrilater(data(1),data(2),data(3),data(4));
-Drawing(2+i).component(accComp).data=[2,1,5*(i-1)+0,-20];
+Drawing(1+i).component(accComp).name=['WeightEdge_',1];
+Drawing(1+i).component(accComp).fnc=@(data)quadrilater(data(1),data(2),data(3),data(4));
+Drawing(1+i).component(accComp).data=[2,1,5*(i-1)+0,-20];
 
 accComp=accComp+1;
 
-Drawing(2+i).component(accComp).name=['WeightHole_',1];
-Drawing(2+i).component(accComp).fnc=Drawing(1).function(1).fnc;
-Drawing(2+i).component(accComp).data=[5*(i-1)+0,-20,0.5];
+Drawing(1+i).component(accComp).name=['WeightHole_',1];
+Drawing(1+i).component(accComp).fnc=Drawing(1).function(1).fnc;
+Drawing(1+i).component(accComp).data=[5*(i-1)+0,-20,0.5];
 
 end
 
@@ -193,18 +193,18 @@ end
 
 for i=1
 
-Drawing(4+i).name=sprintf('Dynamometer_%i',i);
+Drawing(3+i).name=sprintf('Dynamometer_%i',i);
 
-Drawing(4+i).color.off=color.lightyellow;
-Drawing(4+i).color.on=color.lightRed;
-Drawing(4+i).color.fix=color.black;
-Drawing(4+i).color.joint=color.lightGreen;
+Drawing(3+i).color.off=color.lightyellow;
+Drawing(3+i).color.on=color.lightRed;
+Drawing(3+i).color.fix=color.black;
+Drawing(3+i).color.joint=color.lightGreen;
 
-Drawing(4+i).contextMenu = uicontextmenu;
+Drawing(3+i).contextMenu = uicontextmenu;
 %FixDraw3=uiFix(Drawing(3).contextMenu);
 %uiFixAdd(FixDraw3);
 %uiUnFixAdd(FixDraw3)
-ConDraw4(i).ui=uiCon(Drawing(4+i).contextMenu);
+ConDraw4(i).ui=uiCon(Drawing(3+i).contextMenu);
 uiConWeightAdd(ConDraw4(i).ui);
 uiUnConWeightAdd(ConDraw4(i).ui);
 %uiSetWeight(Drawing(4+i).contextMenu);
@@ -212,14 +212,14 @@ uiUnConWeightAdd(ConDraw4(i).ui);
 accComp=0;
 accComp=accComp+1;
 
-Drawing(4+i).component(accComp).name=['DynamometreEdge_',1];
-Drawing(4+i).component(accComp).fnc=@(data)quadrilater(data(1),data(2),data(3),data(4));
-Drawing(4+i).component(accComp).data=[1,2,10,-5];
+Drawing(3+i).component(accComp).name=['DynamometreEdge_',1];
+Drawing(3+i).component(accComp).fnc=@(data)quadrilater(data(1),data(2),data(3),data(4));
+Drawing(3+i).component(accComp).data=[1,2,10,-5];
 
 accComp=accComp+1;
 
-Drawing(4+i).component(accComp).name=['DynamometreHole_',1];
-Drawing(4+i).component(accComp).fnc=Drawing(1).function(1).fnc;
-Drawing(4+i).component(accComp).data=[10,-5,0.5];
+Drawing(3+i).component(accComp).name=['DynamometreHole_',1];
+Drawing(3+i).component(accComp).fnc=Drawing(1).function(1).fnc;
+Drawing(3+i).component(accComp).data=[10,-5,0.5];
 
 end

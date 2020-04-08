@@ -39,7 +39,7 @@ uiUnLink=@(c)uimenu(c,'Label','Erase','Callback',@unLink);
 uiLinkAddPulley=@(c)uimenu(c,'Label','Start','Callback',@linkPulley);
 
 uiLinkAddWeight=@(c)uimenu(c,'Label','Start','Callback',@linkWeight);
-uiSetWeight=@(c)uimenu(c,'Label','Set Weight','Callback',@linkSetWeight);
+uiSetWeight=@(c)uimenu(c,'Label','Set Weight','Callback',@SetWeight);
 
 
 LinkContextMenu=uicontextmenu;
@@ -82,7 +82,8 @@ global labNum;
 
 
 function fixHole(object, eventdata)
-global shp state;
+global shp state;clc;
+    display('Select a hole to fix it');
     waitforbuttonpress
     C = get (gca, 'CurrentPoint');
     x=C(1,1);y=C(1,2);
@@ -104,10 +105,9 @@ global shp state;
     if(bool);display('Point is not inside a hole. Exiting addition of fixation.');end;
 end
 
-
-
 function unfixHole(object, eventdata)
-global shp state;
+global shp state;clc;
+    display('Select a hole to unfix it');
     waitforbuttonpress
     C = get (gca, 'CurrentPoint');
     x=C(1,1);y=C(1,2);
@@ -126,7 +126,7 @@ global shp state;
 end
 
 function conWeight(object,eventdata)
-global shp LinkContextMenuWeight;  
+global shp LinkContextMenuWeight;clc;  
     ishp=shp(object.Parent.Parent.UserData);
     bool=true;
     ihole=0;
@@ -141,8 +141,10 @@ global shp LinkContextMenuWeight;
                 %ishp.con.ContextMenu=LinkContextMenuWeight;
                 uiLink=@(c)uimenu(c,'Label','Linking');
                 if (contains(ishp.name,'Dynamometer'))
+                    display('Automatically selected.');
                     uiLinkAddWeight=@(c)uimenu(c,'Label','Start','Callback',@linkDynamometer);
                 else
+                    display('Automatically selected. Remember to set weight value...');
                     uiLinkAddWeight=@(c)uimenu(c,'Label','Start','Callback',@linkWeight);
                 end
                 
@@ -163,7 +165,8 @@ global shp LinkContextMenuWeight;
 end
 
 function conHole(object, eventdata)
-global shp state LinkContextMenu;
+global shp state LinkContextMenu;clc;
+    display('Select a hole to connect it');
     waitforbuttonpress
     C = get (gca, 'CurrentPoint');
     x=C(1,1);y=C(1,2);
@@ -226,7 +229,7 @@ clc;
                 break
                 end
             end
-            if (boolFound) 
+            if (boolFound && checkIfLinkIsCorrect(linkShp.itm(linkShp.cnt+1).link.start,linkShp.itm(linkShp.cnt+1).link.end)) 
                 display('Selected point is correct');
                 if (isnan(linkShp.itm(linkShp.cnt+1).link.start(2)))
                      [xstart, ystart] = centroid(shp(linkShp.itm(linkShp.cnt+1).link.start(1)).con.Shape);
@@ -256,21 +259,30 @@ clc;
     
 end
 
+function bool=checkIfLinkIsCorrect(istart,iend)
+    if (nnz(0==(istart==iend))>0)
+        bool=true;
+    else
+        bool=false;
+    end
+end
+
 function linkPulley(object,eventdata)
 global shp state stateLbl linkShp UnLinkContextMenu;
 clc;
+
     switch(stateLbl.text)
         case 'Start'
             conHole=object.Parent.Parent.UserData.Con;
             linkShp.itm(linkShp.cnt+1).link.start=conHole;
             boolFound=true;
-            if (boolFound) stateLbl.text='End'; display('Selected point is correct'); else; display('Not a correct point');end;
+            if (boolFound) stateLbl.text='End'; display('Automatically selected point'); else; display('Not a correct point');end;
         case 'End'
             conHole=object.Parent.Parent.UserData.Con;
             boolFound=false;
             linkShp.itm(linkShp.cnt+1).link.end=conHole;
             boolFound=true;
-        if (boolFound) 
+        if (boolFound && checkIfLinkIsCorrect(linkShp.itm(linkShp.cnt+1).link.start,linkShp.itm(linkShp.cnt+1).link.end)) 
             display('Selected point is correct');
             if (isnan(linkShp.itm(linkShp.cnt+1).link.start(2)))
                  [xstart, ystart] = centroid(shp(linkShp.itm(linkShp.cnt+1).link.start(1)).con.Shape);
@@ -309,15 +321,15 @@ clc;
             linkShp.itm(linkShp.cnt+1).link.start=conHole;
             linkShp.itm(linkShp.cnt+1).hasWeight.start=true;
             boolFound=true;
-            if (boolFound) stateLbl.text='End'; display('Selected point is correct'); else; display('Not a correct point');end;
+            if (boolFound) stateLbl.text='End'; display('Automatically selected point'); else; display('Not a correct point');end;
         case 'End'
             conHole=object.Parent.Parent.UserData.Con;
             boolFound=false;
             linkShp.itm(linkShp.cnt+1).link.end=conHole;
-            linkShp.itm(linkShp.cnt+1).hasWeight.end=true;
             boolFound=true;
-        if (boolFound) 
+        if (boolFound && checkIfLinkIsCorrect(linkShp.itm(linkShp.cnt+1).link.start,linkShp.itm(linkShp.cnt+1).link.end)) 
             display('Selected point is correct');
+            linkShp.itm(linkShp.cnt+1).hasWeight.end=true;
             if (isnan(linkShp.itm(linkShp.cnt+1).link.start(2)))
                  [xstart, ystart] = centroid(shp(linkShp.itm(linkShp.cnt+1).link.start(1)).con.Shape);
             else
@@ -354,13 +366,13 @@ clc;
             conHole=object.Parent.Parent.UserData.Con;
             linkShp.itm(linkShp.cnt+1).link.start=conHole;
             boolFound=true;
-            if (boolFound) stateLbl.text='End'; display('Selected point is correct'); else; display('Not a correct point');end;
+            if (boolFound) stateLbl.text='End'; display('Automatically selected point.'); else; display('Not a correct point');end;
         case 'End'
             conHole=object.Parent.Parent.UserData.Con;
             boolFound=false;
             linkShp.itm(linkShp.cnt+1).link.end=conHole;
             boolFound=true;
-        if (boolFound) 
+        if (boolFound && checkIfLinkIsCorrect(linkShp.itm(linkShp.cnt+1).link.start,linkShp.itm(linkShp.cnt+1).link.end)) 
             display('Selected point is correct');
             if (isnan(linkShp.itm(linkShp.cnt+1).link.start(2)))
                  [xstart, ystart] = centroid(shp(linkShp.itm(linkShp.cnt+1).link.start(1)).con.Shape);
@@ -390,9 +402,8 @@ clc;
     
 end
 
-
 function unLink(object,eventdata)
-global linkShp;
+global linkShp;clc;
     idx=object.Parent.UserData;
     idx.delete
     idel=0;
@@ -403,6 +414,7 @@ global linkShp;
         idel=idel+1;
         end
     end
+    display('Link erased');
 end
 
 function [x,y]=getMouseXY()
@@ -412,6 +424,8 @@ end
 
 function unconHole(object, eventdata)
 global shp state;
+clc;
+    display('Select a hole to disconnect it');
     waitforbuttonpress
     C = get (gca, 'CurrentPoint');
     x=C(1,1);y=C(1,2);
@@ -433,7 +447,8 @@ global shp state;
 end
 
 function unconWeight(object, eventdata)
-global shp state;
+global shp state;clc;
+    display('Automatically erasing connection.');
     ishp=shp(object.Parent.Parent.UserData);
     bool=true;
     ihole=0;
@@ -448,7 +463,7 @@ global shp state;
 end
 
 function conPulley(object, eventdata)
-global shp state LinkContextMenuPulley;
+global shp state LinkContextMenuPulley;clc;
     ishp=shp(object.Parent.Parent.UserData);
     r=(max(ishp.get.Shape.Vertices(:,1))-min(ishp.get.Shape.Vertices(:,1)))/2;
     dr=0.2;
@@ -504,18 +519,21 @@ global shp state LinkContextMenuPulley;
 end
 
 function unconPulley(object, eventdata)
-global shp state;
+global shp state;clc;
+    display('Automatically erasing connection.');
     ishp=shp(object.Parent.Parent.UserData);
     %ishp.get.Shape=subtract(ishp.get.Shape,ishp.con.Shape);
     ishp.con.Shape=polyshape([0,0]);
 
 end
 
-function linkSetWeight(object,eventdata)
+function SetWeight(object,eventdata)
 global shp state;
+    clc;
     ishp=object.Parent.UserData;
-    mass=input('Insert the weight (mass) in kg:');
+    mass=input('Insert the weight (mass) in kg:')
     g=9.81;
     shp(ishp).UserData.weight=mass*g;
+    shp(ishp).get.Tag=sprintf('%s = %f N',shp(ishp).name,mass*g);
     
 end

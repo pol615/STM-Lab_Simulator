@@ -7,7 +7,7 @@ global OriginalShape;
 
 
 function simulate_(object,eventdata)
-adjustLink()
+adjustLink();
 
 global labNum;
     switch (labNum)
@@ -164,6 +164,9 @@ global Fixation OriginalShape shp;
 
     [Load,theta]=ObtainLoad(iFix);
     
+    global Mom Forc Time;
+    Mom=[];Forc=[];Time=[];
+    
     [t,y]=rigidBodySolver([0,0,0],[0,0,0],Load,theta);
     %{
     t=0:0.01:pi/6;
@@ -172,14 +175,48 @@ global Fixation OriginalShape shp;
     y(:,4)=y_(t);
     %}
     
-
-    for i=1:length(t)-1
-        dy=y(i+1,4)-y(i,4);
+    if (true)
+    N=100;
+    xi=0:1/N:1;
+    Acof=4;
+    nlim=length(t);
+    idx=unique(round((0+(exp(Acof*xi)-1)./(exp(Acof)-1))*nlim,0));
+    idx(1)=1;
+    for i=1:length(idx)-1
+        dy=y(idx(i+1),4)-y(idx(i),4);
         if(i==1); dy=dy+y(1,4);end;
-        if (abs(dy)<1e-3 && i/(length(t)-1)>0.3); break; end;
+        if (abs(dy)<1e-3 && idx(i)/(length(t)-1)>0.3)
+            dy=y(end,4)-y(idx(i),4);
+            rotateShape(iFix,dy,x0,y0);
+            drawnow limitrate nocallbacks
+            pause(0.05)
+            break; 
+        end
         rotateShape(iFix,dy,x0,y0);
-        drawnow update
+        drawnow limitrate nocallbacks
         pause(0.05)
+    end
+    else
+    
+    rotateShape(iFix,y(end,4),x0,y0);
+    drawnow update
+    pause(0.05)
+    
+    figure(2)
+    plot(t,y(:,4));
+    figure(3);clf;
+    subplot(1,2,1)
+    title('Forces');
+    hold on
+    plot(Time,Forc(:,1),'-r');
+    plot(Time,Forc(:,2),'--b');
+    hold off
+    subplot(1,2,2)
+    title('Moments');
+    hold on
+    plot(Time,Mom(:,1),'-r');
+    plot(Time,Mom(:,2),'--b');
+    hold off
     end
     
     OriginalShape.angle=y(end,4);
@@ -226,10 +263,17 @@ global shp;
         nan;
     elseif(contains(shp(iFix).name,'Weight'))
         if (isempty(shp(iFix).UserData.weight));error('CUSTOM ERROR:   Weight: %s has no weight assigned',shp(iFix).name);end;
-        Load=@(eps)-shp(iFix).UserData.weight;
+        Load=@(u)-shp(iFix).UserData.weight;
     elseif(contains(shp(iFix).name,'Dynamometer'))
-        Load=@(eps)1*eps;
+        Load=@(u)DynamometerTagModification(u,iFix);
     end
+end
+
+function F=DynamometerTagModification(u,ishp)
+    global shp;
+    k=-10;
+    F=k*u;
+    shp(ishp).get.Tag=sprintf('%s = %f N',shp(ishp).name,-F);
 end
 
 function theta=ObtainAngles(UnknownLink)
@@ -242,7 +286,8 @@ global shp linkShp;
         theta(ilink).r0=[x-x0;y-y0];
         [x,y]=givePoint(ILINK.start(1),ILINK.start(2));
         theta(ilink).r1=[x-x0;y-y0];
-        theta(ilink).eps=@(beta)ExternalEps(beta,theta(ilink).r0,theta(ilink).r1,...
+        theta(ilink).r=@(beta,r0)GiveDistance(beta,theta(ilink).r0);
+        theta(ilink).eps=@(beta)ExternalU(beta,theta(ilink).r0,theta(ilink).r1,...
             shp(ILINK.start(1)).name);
         theta(ilink).fnc=@(beta)ExternalForce(beta,theta(ilink).r0,theta(ilink).r1,...
             shp(ILINK.start(1)).name);
@@ -251,28 +296,32 @@ end
 
 function theta=ExternalForce(beta,r0,r1,str)
     if (contains(str,'Pulley'))
-        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
+        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r0 - r1;
         theta=atan2(dx(2),dx(1));
     elseif(contains(str,'Dynamometer'))
-        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
+        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r0 - r1;
         theta=atan2(dx(2),dx(1));
     else
-        theta=beta-pi/2;
+        theta=pi/2;
     end
 end
 
-function eps=ExternalEps(beta,r0,r1,str)
+function u=ExternalU(beta,r0,r1,str)
     if (contains(str,'Pulley'))
-        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
-        dx0=[r1 - r0];
-        eps=norm(dx)/norm(dx0);
+        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r0 - r1;
+        dx0=r0 - r1;
+        u=norm(dx)-norm(dx0);
     elseif(contains(str,'Dynamometer'))
-        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r1 - r0;
-        dx0=[r1 - r0];
-        eps=norm(dx)/norm(dx0);
+        dx=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r0 - r1;
+        dx0=r0 - r1;
+        u=norm(dx)-norm(dx0);
     else
-        eps=0;
+        u=0;
     end
+end
+
+function r=GiveDistance(beta,r0)
+        r=[cos(beta),-sin(beta);sin(beta),cos(beta)]*r0;
 end
 
 
