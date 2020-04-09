@@ -37,6 +37,8 @@ end
 
 function adjustLink()
 global shp linkShp state;
+if linkShp.cnt>0
+    
     for itm=linkShp.itm;
         
         [xstart,ystart] = givePoint(itm.link.start(1),itm.link.start(2));
@@ -56,6 +58,7 @@ global shp linkShp state;
             end
         end
     end
+end
     
 end
 
@@ -124,8 +127,10 @@ end
 
 function rotateShape(i,theta,x,y)
 global shp linkShp;
-    
+
+if linkShp.cnt>0  
     UnknownLink=findLinksInCon(i,-1);
+
     for ilink=1:UnknownLink.cnt
         ILINK=UnknownLink.itm(ilink);
         [xstart,ystart]=givePoint(ILINK.start(1),ILINK.start(2));
@@ -138,7 +143,7 @@ global shp linkShp;
         linkShp.itm(ILINK.link).get.Shape=polyshape(...
             [xstart,ystart;xend,yend;xstart-1e-4,ystart-1e-4]);
     end
-
+end
     rotateShapeAll(shp(i).get,theta*180/pi,x,y);
     rotateShapeAll(shp(i).fix,theta*180/pi,x,y);
     rotateShapeAll(shp(i).con,theta*180/pi,x,y);
@@ -157,12 +162,20 @@ function rotateShapeAll(ishp,theta,x,y)
 end
 
 function simulateRigidBody()
-global Fixation OriginalShape shp;
+global Fixation OriginalShape shp linkShp;
     iFix=Fixation.Value;
     
     [x0,y0]=centroid(shp(iFix).fix.Shape);
-
-    [Load,theta]=ObtainLoad(iFix);
+    [xg,yg]=centroid(subtract(shp(iFix).get.Shape,shp(iFix).fix.Shape));
+    if (sum(isnan([x0,y0])));x0=xg;y0=yg;end;
+if linkShp.cnt>0    
+    [Load,theta]=ObtainLoad(iFix,x0,y0);
+else
+    Load=[];theta=[];
+end    
+    [Load,theta]=ObtainCoG(iFix,Load,theta,x0,y0,xg,yg);
+    
+    
     
     global Mom Forc Time;
     Mom=[];Forc=[];Time=[];
@@ -225,19 +238,36 @@ global Fixation OriginalShape shp;
     
 end
 
+function [Load,theta]=ObtainCoG(iFix,Load,theta,x0,y0,xg,yg)
+global shp;
+
+    A=area(subtract(shp(iFix).get.Shape,shp(iFix).fix.Shape));
+    t=3e-3;
+    rho=7800;
+    
+    cnt=length(Load);
+    Load(cnt+1).Children=@(u)-rho*A*t;
+    theta(cnt+1).r0=[xg-x0,yg-y0]';
+    theta(cnt+1).r1=[0,0]';
+    theta(cnt+1).r=@(beta,r0)GiveDistance(beta,theta(cnt+1).r0);
+    theta(cnt+1).eps=@(beta)ExternalU(beta,theta(cnt+1).r0,theta(cnt+1).r1,'Weight_CoG');
+    theta(cnt+1).fnc=@(beta)ExternalForce(beta,theta(cnt+1).r0,theta(cnt+1).r1,'Weight_CoG');
+    
+    
+end
 
 
-function [Load,theta]=ObtainLoad(iFix,iLink)
-    if nargin==2
+function [Load,theta]=ObtainLoad(iFix,x0,y0,iLink)
+    if nargin==4
         UnknownLink=findLinksInCon(iFix,iLink);
         theta=[];
     else
         UnknownLink=findLinksInCon(iFix,-1);
-        theta=ObtainAngles(UnknownLink);
+        theta=ObtainAngles(UnknownLink,x0,y0);
     end
     if (UnknownLink.cnt>0)
     for iUnknownLink=1:UnknownLink.cnt
-        [Load(iUnknownLink).Children,~]=ObtainLoad(UnknownLink.itm(iUnknownLink).mech,UnknownLink.itm(iUnknownLink).link);
+        [Load(iUnknownLink).Children,~]=ObtainLoad(UnknownLink.itm(iUnknownLink).mech,x0,y0,UnknownLink.itm(iUnknownLink).link);
     end
     else
        Load=SetLoad(iFix); 
@@ -276,12 +306,12 @@ function F=DynamometerTagModification(u,ishp)
     shp(ishp).get.Tag=sprintf('%s = %f N',shp(ishp).name,-F);
 end
 
-function theta=ObtainAngles(UnknownLink)
+function theta=ObtainAngles(UnknownLink,x0,y0)
 global shp linkShp;
     for ilink=1:UnknownLink.cnt
         
         ILINK=UnknownLink.itm(ilink);
-        [x0,y0]=centroid(shp(ILINK.end(1)).fix.Shape);
+        %[x0,y0]=centroid(shp(ILINK.end(1)).fix.Shape);
         [x,y]=givePoint(ILINK.end(1),ILINK.end(2));
         theta(ilink).r0=[x-x0;y-y0];
         [x,y]=givePoint(ILINK.start(1),ILINK.start(2));
@@ -329,6 +359,7 @@ function UnknownLink=findLinksInCon(ishp_,iilinkRef)
 global shp linkShp;
     UnknownLink.cnt=0;
     iilink=0;
+if linkShp.cnt>0  
     for ilink=linkShp.itm
         iilink=iilink+1;
         if (iilink==iilinkRef);continue;end;
@@ -346,5 +377,6 @@ global shp linkShp;
             UnknownLink.cnt=UnknownLink.cnt+1;
         end
     end
+end
 
 end
