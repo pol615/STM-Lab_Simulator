@@ -10,34 +10,49 @@
 	
   <div class="cbackground">
 
+	<div>
+		<h1>Disclaimer</h1>
+		<p>This app has been code with a sortage of time in order to continue the with on-line evaluation. Therefore there may still be unreported bugs or not be up to the highest end-user standard.</p>
+		<p>The user is advised that this tool is close but not finished and if any <strong>major</strong> bugs are found, do report them to the given contact person. However, take in mind that there is not always a unique way to arrive to a solution, so if in the way to mount your mechanical virtual system you encounter some major problem, do try to border it by another means if possible, otherwise send a report back to the contact person.</p>
+		<p><strong>Click on the bullet points of the documentations to expand the setions.</strong></p>
+	</div>
+	
 	<details >
 		<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h1>SETUP</h1></summary>
 		
 			<div>
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/Qt5zN0swMN4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
-			<p>aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa aaaaaaaaa </p>
+			<p>Check for further detail:</p>
 			<div>
 				<ul>
-					<li> <a href="https://www.mathworks.com/">mathworks website</a></li>
-					<li> <a href="https://uk.mathworks.com/products/matlab-online.html">MATLAB ONLINE</a></li>
+					<li> <a href="https://github.com/rpacheco-blazquez/STM-Lab_Simulator">Simulator repository (download the source files)</a></li> 
+					<li> <a href="https://www.mathworks.com/">mathworks website (create a website)</a></li>
+					<li> <a href="https://uk.mathworks.com/products/matlab-online.html">MATLAB ONLINE (upload teh source files)</a></li>
 				</ul>
 			</div>
 	  </details>
 
 	<!-- </div>	 -->
 	<details >
-	<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h1>GUI</h1></summary>
+	<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;">
+		<h1>GUI</h1>
+	</summary>
+	
 
 	<details >
 		<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h2>Element Interaction</h2></summary>
-			<div>
+		<p>You may interact with elements if you hover over them. Once you hover over them, they change from their original color to red and will display information about that element (name, assigned values if it is a  weigth, dynamometer force, etc.).</p>	
+		<p>Once the element turns red, you shall be able to translate the element or pop up a menu using the <mark>right-click button</mark> from your mouse</p>
+		<div>
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/m6EbyoktMNg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
 		</details>
 
 		<details >
 		<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h2>Panning</h2></summary>
+			<p>You can pan an element as part of an element-interaction when the element has turned red by pressing <mark>left-click button down</mark>, move it to the desired place and lift <mark>left-click button up</mark>. </p>
+			<p>You can pan the canvas/board positioning the mouse on an empty space and by pressing <mark>left-click button down</mark>, move it to the desired place and lift <mark>left-click button up</mark>. Note that this option is a little bit buggy and you may preffer to intereact with the zoom in and zoom out option.</p>
 			<div>
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/ByfKvASW_7c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
@@ -45,6 +60,10 @@
 
 		<details >
 		<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h2>Zooming</h2></summary>
+			<p>You may want to zoom in by centering the mouse around the area you want to zoom in and scrolling the <mark> scroll-wheel up</mark>.</p>
+			<p>You may want to zoom out by centering the mouse around the area you want to zoom out and scrolling the <mark> scroll-wheel out</mark>.</p>
+			<p>You may want to reset the view by positioning the mouse in an empty space and using the <mark> right-click button</mark> to pop up a menu and select <mark>reset view</mark>.</p>
+			<p>You may want to fit the zoom to the current view by positioning the mouse in an empty space and using the <mark> right-click button</mark> to pop up a menu and select <mark>zoom frame</mark>. <strong class="newfeature">(NEW FEATURE)</strong></p>
 			<div>
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/alAeno69bGE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>			
 			</div>
@@ -52,6 +71,11 @@
 
 		<details >
 		<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h2>Final Remarks</h2></summary>
+			<p>If you want to reset the app simulation you have to push the <mark>Reset App button</mark>. Note that the progress you have done will be lost.</p>
+			<p>Once the mechanical system has been set, you will be able to run the simulation. Note that if weights are note set or the system is not fixed, you will obtain an unexpected behaviour and luckily obtain a CUSTOM error. To run the simulation push the <mark>Simulate button</mark>.</p>
+			<p>The dropdown menu so-called <mark>Parent Element</mark> should refeer always to the element in which you have attached your loads and fixed. E.g., in the video below the element <mark>Lever</mark> is the one being fixed and applied loads onto it. If instead you had selected the pulley or weights, the dynamic rigid body movement would be solved there and that would be non-sensical since the they are not fixed.</p>
+			<p>After running a simulation and checking that the simulator responds back (note: you can use "1+1" or other operation in  the command window to check the simulator has ended plotting, and if it does not return "2" it means it still is running something in background). You can click on <mark>Reset Simulation button</mark> to reset the mechanical system and elements to their state prior running the simulation.</p>
+			<p>If you may find that the simulator is running slower than usual, you may want to wait a little or in case there is no major upgrade, you should perform a <mark>Hard Reset</mark>. This procedure is simply to logoff and login back to matlab online so it may kill any unwanted or background process you had during your session and which may be slowing your simulation. This procedure is highly recommended once you start experiencing slowness and buggy display.</p>
 			<div>
 				<iframe width="560" height="315" src="https://www.youtube.com/embed/kBMyC-OgYMU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
@@ -61,17 +85,26 @@
 			
 
 	<details >
-	<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h1>Basics</h1></summary>
+	<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;">
+		<h1>Basics</h1>
+	</summary>
 
 	<details >
-		<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;"><h2>Fixation</h2></summary>
+		<summary onclick="if(this.parentElement.getAttribute('open')!='open') this.parentEleent.setAttribute('open','open'); else this.parentElement.removeAttribute ('open'); return false;">
+			<h2>Fixation</h2>
+		</summary>
 			<div>
+				<p>You can set a fixation by interacting with an element (hover over an element and wait until the element has turn red) using the <mark>right-click button</mark>, waiting until a menu pops up and selecting the <mark>Fix</mark> menu and <mark>Add</mark> submenu option. </p>
+				<p>You can unset a fixation by interacting with an element (hover over an element and wait until the element has turn red) using the <mark>right-click button</mark>, waiting until a menu pops up and selecting the <mark>Fix</mark> menu and <mark>Erase</mark> submenu option. </p>
+				<p><strong class="newfeature">Note that the different elements have a different way to set or unset the fixations, this is particularly explain in the ELEMENTS subsection inside the BASICS section.</strong></p>
 				<div>
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/ijiJop6A9Zs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 				<div>
+						<p>This video features:</p>
 						<ul>
 						<li> Fix your element through a hole.</li>
+						<li> Unfix your element through a hole.</li>
 						</ul>
 				</div>
 			</div>
@@ -82,12 +115,17 @@
 			<h2>Joint/Connection</h2>
 		</summary>
 			<div>
+				<p>You can set a connection/joint by interacting with an element (hover over an element and wait until the element has turn red) using the <mark>right-click button</mark>, waiting until a menu pops up and selecting the <mark>Con</mark> menu and <mark>Add</mark> submenu option. </p>
+				<p>You can unset a connection/joint by interacting with an element (hover over an element and wait until the element has turn red) using the <mark>right-click button</mark>, waiting until a menu pops up and selecting the <mark>Con</mark> menu and <mark>Erase</mark> submenu option. </p>
+				<p><strong class="newfeature">Note that the different elements have a different way to set or unset the connections/joints, this is particularly explain in the ELEMENTS subsection inside the BASICS section.</strong></p>
 				<div>
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/J4SoWwlMXrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 				<div>
+					<p>This video features:</p>
 					<ul>
-					<li> Set up a join to connect links to your element.</li>
+					<li> Set up a joint to connect links to your element.</li>
+					<li> Erase a joint.</li>
 					</ul>
 				</div>
 			</div>
@@ -98,12 +136,17 @@
 			<h2>Link</h2>
 		</summary>
 			<div>
+				<p>You can create a link between two conections by interacting with a created <strong>connection</strong> using the <mark>right-click button</mark> on to the green area spawn once the connection was created, waiting until a menu pops up and selecting the <mark>Linking</mark> menu and <mark>Start</mark> or <mark>End</mark> submenu option depending if you want to start or close a link between two connections. </p>
+				<p>You can erase a link by interacting with the so-called link (hovering over the link) by pressing the <mark>right-click button</mark>, waiting until a menu pops up and selecting the <mark>Erase</mark> option.</p>
+				<p><strong class="newfeature">Note that the different elements have a different way to SET the links, this is particularly explain in the ELEMENTS subsection inside the BASICS section. However the erasing procedure is exactly the same since it is performed over the link itself.</strong></p>
 				<div>
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/a-2b3pvPGlk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 				<div>
+						<p>This video features:</p>
 						<ul>
-							<li> Link two connections</li>
+							<li> Link two connections.</li>
+							<li> Erase a link.</li>
 						</ul>
 				</div>
 			</div>
@@ -119,13 +162,16 @@
 					<h3>Lever</h3>
 				</summary>
 					<div>
+						<p>The <mark>Lever</mark> element has two options: <mark>Fix</mark> and <mark>Con</mark>. Since the <mark>Lever</mark> has multiple <mark>holes</mark> whenever <mark>Adding</mark> or <mark>Erasing</mark> a <mark>Fixation</mark> or <mark>Connection</mark> it will ask/expect you select which whole you want to connect/disconnect or fix/unfix by placing your mouse over the <mark>hole</mark> region and using <mark>left-click button</mark> to confirm it.</p>
+						<p>The procedure on how to <mark>Fix</mark> or <mark>Connect</mark> is by hovering over the lever (not the <mark>holes</mark>) wait until it has turned red and push the <mark>right-click button</mark> and select <mark>Add</mark> or <mark>Erase</mark> options from one of the two main options from the spawn pop-up menu.</p>
 						<div>
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/KwIrp4obuo8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						<div>
+							<p>This video features</p>
 							<ul>
-								<li> Fixation : Select which hole</li>
-								<li> Connection : Select which hole</li>
+								<li> Fixation : Select which hole to FIX or UNFIX</li>
+								<li> Connection : Select which hole to CONNECT or DISCONNECT</li>
 							</ul>
 						</div>
 					</div>
@@ -136,10 +182,16 @@
 					<h3>Pulley</h3>
 				</summary>
 					<div>
+						<p>The <mark>Pulley</mark> element has two options: <mark>Fix</mark> and <mark>Con</mark>.</p>
+						<p>To fix/unfix the <mark>Pulley</mark>, hover over it and wait until has turned red. Then push <mark>right-click button</mark> and wait until the pop-up menu spawns. Select <mark>Fix</mark> menu option and then either <mark>Add</mark>or <mark>Erase</mark>. The <mark>Pulley</mark> will expect you to select the unique hole it has by placing your mouse over the <mark>hole</mark> region and using <mark>left-click button</mark> to confirm it</p>
+						<p>To connect the <mark>Pulley</mark>, hover over it and wait until has turned red. Then push <mark>right-click button</mark> and wait until the pop-up menu spawns. Select <mark>Con</mark> menu option and then <mark>Add</mark>. The <mark>Pulley</mark> will create two green spots and it will ask you in which side you want to hung the weights. To select the desired connection side you have to place your mouse over the desired <mark>conection</mark> region and use <mark>left-click button</mark> to confirm it</p>
+						<p>To disconnect the <mark>Pulley</mark>, hover over it and wait until has turned red. Then push <mark>right-click button</mark> and wait until the pop-up menu spawns. Select <mark>Con</mark> menu option and then <mark>Add</mark>. It will automatically erase the connection.</p>
+						<p><strong class="newfeature">Note that a connection should never be erased first if there are still links present. Do follow always erase the link first.</strong></p>
 						<div>
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/IHClG2GUWyA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						<div>
+							<p>This video features:</p>
 							<ul>
 								<li> Fixation : Select which hole (just one)</li>
 								<li> Connection : Select which side of the pulley to hang the weight</li>
@@ -153,10 +205,13 @@
 					<h3>Weight</h3>
 				</summary>
 					<div>
+						<p>The <mark>Weight</mark> can only be connected/disconnected by hovering over it and waiting until it turns red, then pressing <mark>right-click button</mark> and waiting until the menu pops up and select <mark>Con</mark> option and then <mark>Add</mark> or <mark>Erase</mark> and it will automatically connect or disconnect the <mark>Weight</mark>.</p>
+						<p>The <mark>Weight</mark> value can be set by hovering over it and waiting until it turns red, then pressing <mark>right-click button</mark> and waiting until the menu pops up and select <mark>Set weight</mark>. A message should prompt in <mark>Command Window</mark> asking the total of mass the user wants to input (<storng class"newfeature>It has been seen a strange behaviour in which the message is not shown but still awaits for the user to insert the value in the <mark>command window</mark></storng>). The value input can be seen now if you hover the <mark>Weight</mark> right to its name.</p>
 						<div>
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/9BOOlVcdGvA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						<div>
+							<p>This video features:</p>
 							<ul>
 								<li> Connection : Automatically selects the unique whole</li>
 								<li> Set weight : Prompts a message to introduce the weight (mass) in kg</li>
@@ -170,12 +225,14 @@
 					<h3>Dynamometer</h3>
 				</summary>
 					<div>
+						<p>The <mark>Dynamometer</mark> can only be connected/disconnected by hovering over it and waiting until it turns red, then pressing <mark>right-click button</mark> and waiting until the menu pops up and select <mark>Con</mark> option and then <mark>Add</mark> or <mark>Erase</mark> and it will automatically connect or disconnect the <mark>Dynamometer</mark>.</p>
 						<div>
 							<iframe width="560" height="315" src="https://www.youtube.com/embed/HRm-asfTUMs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 						</div>
 						<div>
+							<p>This video features:</p>
 							<ul>
-								<li> Connection : Automatically selects the unique whole</li>
+								<li> Connection : Automatically selects the unique hole</li>
 							</ul>
 						</div>
 					</div>
@@ -216,7 +273,13 @@
 					<div>
 						<iframe width="560" height="315" src="https://www.youtube.com/embed/tfzVwMKZeJc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
-					<p> Description of the element setting for lab 2 </p>
+					<p> Laboratory session 2 requires: </p>
+					<ul>
+						<li>Weight</li>
+						<li>Pulley</li>
+						<li>Lever</li>
+						<li>Counter-weight</li>
+					</ul>
 				</div>
 		</details>
 
@@ -228,7 +291,12 @@
 					<div>
 						<iframe width="560" height="315" src="https://www.youtube.com/embed/EeS0TrnkaHs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
-					<p> Description of the element setting for lab 3 </p>
+					<p> Laboratory session 2 requires: </p>
+					<ul>
+						<li>2 Weight</li>
+						<li>Lever</li>
+						<li>Dynamometer</li>
+					</ul>
 				</div>
 		</details>
 

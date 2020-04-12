@@ -17,8 +17,8 @@ body {
     height: 100%;
     padding: 1%;
     border:0%;
-    border-radius: 0%;
-    min-height: 100vh;
+    border-radius: 5%;
+    min-height: 90vh;
     /* display: block; */
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
     
@@ -49,8 +49,28 @@ body {
     background: #4099ff;
 }
 
+mark{
+    background-color: grey;
+    color: white;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    font-style: oblique;
+    border-radius: 10px;
+}
+
+.newfeature{
+    color: red;
+}
 
 /* DETAILS */
+
+ul{
+    text-align: left; 
+    margin-left: 35%;
+    color: black;
+}
 
 details details summary{
     background-color: rgb(76, 163, 175);
@@ -79,7 +99,7 @@ details {
 
 details summary {
     display: block; 
-    border-radius: 10%;
+    border-radius: 5%/80%;
     background-color: rgb(86, 76, 175);
     width:60%;
     margin-left: 20%;
