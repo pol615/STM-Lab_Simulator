@@ -1,3 +1,4 @@
+
 body {
     background: rgb(255, 255, 255);
     padding: 0;
@@ -12,8 +13,8 @@ body {
 .cbackground{
     background: rgb(172, 208, 226);
     /* width: 50%; */
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 0%;
+    margin-right: 0%;
     height: 100%;
     padding: 1%;
     border:0%;
@@ -23,6 +24,23 @@ body {
     right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
     
 }
+
+@media (min-width:1025px) {
+    .cbackground{
+        background: rgb(172, 208, 226);
+        /* width: 50%; */
+        margin-left: 25%;
+        margin-right: 25%;
+        height: 100%;
+        padding: 1%;
+        border:0%;
+        border-radius: 5%;
+        min-height: 90vh;
+        /* display: block; */
+        right: -17px; /* Increase/Decrease this value for cross-browser compatibility */
+        
+    }
+  }
 
 .first {
     font-weight: bold;
