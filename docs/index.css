@@ -1,5 +1,5 @@
 body {
-    background: rgb(163, 163, 163);
+    background: rgb(255, 255, 255);
     padding: 0;
     border:0;
     margin:0;
@@ -10,7 +10,7 @@ body {
 }
 
 .cbackground{
-    background: rgb(255, 255, 220);
+    background: rgb(172, 208, 226);
     /* width: 50%; */
     margin-left: 25%;
     margin-right: 25%;
@@ -72,14 +72,21 @@ ul{
     color: black;
 }
 
+details summary {
+    display: block; 
+    border-radius: 5%/80%;
+    background-color: #003068;
+    width:60%;
+    margin-left: 20%;
+}
 details details summary{
-    background-color: rgb(76, 163, 175);
+    background-color: #4099ff;
     width: 50%;
     margin-left: 25%;
 }
 
 details details details summary{
-    background-color: rgb(175, 76, 137);
+    background-color: #526983;
     width: 40%;
     margin-left: 30%;
 }
@@ -97,13 +104,6 @@ details {
     width: 100%;
 }
 
-details summary {
-    display: block; 
-    border-radius: 5%/80%;
-    background-color: rgb(86, 76, 175);
-    width:60%;
-    margin-left: 20%;
-}
 
 
 
