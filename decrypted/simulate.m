@@ -20,6 +20,9 @@ global labNum;
         case 3
             simulateRigidBody();
             display('End Calculation.');
+        case 4
+            simulateRigidBody();
+            display('End Calculation.');
     end
 end
 

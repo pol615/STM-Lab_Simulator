@@ -68,7 +68,7 @@ set (ax,'uicontextmenu',rightClickMenu);
 %end
 
 display('Loading...');
-
+axis tight
 pause(5);
 clc;
 display('Loaded');

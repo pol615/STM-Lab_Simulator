@@ -74,6 +74,8 @@ global labNum;
             run lab2;
         case 3
             run lab3;
+        case 4
+            run lab4;
                 
     end
 
